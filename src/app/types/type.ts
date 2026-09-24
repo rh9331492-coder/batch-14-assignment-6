@@ -9,7 +9,7 @@ export interface Type{
     duration: number
     caloriesBurned:number
     sets: number
-    rep: number
+    reps: string
     rating: number
     description: string
     instructions: string

@@ -5,6 +5,7 @@ import Link from 'next/link'
 const Navber = () => {
     const links = <>
     <Link href={'/'}>Workouts</Link>
+    <Link href={'/listeadCard'}>My Plan</Link>
     </>
 return (
     <header className="bg-[#0b0b0b] text-white py-4 border-b border-neutral-800">

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navber from "./components/navber/Navber";
 import Footer from "./components/footer/Footer";
+import CardsProvider from "./context/CardContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +28,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       {/*  className="min-h-full flex flex-col" */}
       <body cz-shortcut-listen="true">
-        <Navber></Navber>
-        <div>
-          {children}
-        </div>
-        <Footer></Footer>
+        <CardsProvider>
+          <Navber></Navber>
+          <div>
+            {children}
+          </div>
+          <Footer></Footer>
+        </CardsProvider>
       </body>
     </html>
   );
