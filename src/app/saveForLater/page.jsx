@@ -242,25 +242,6 @@ const SaveForLater = () => {
                   View Details
                 </button>
 
-                {/* Add To Plan */}
-                <button
-                  className="
-                    bg-[#ccff00]
-                    hover:bg-[#b3e600]
-                    text-black
-                    text-xs
-                    font-bold
-                    px-4
-                    py-2
-                    rounded-full
-                    transition
-                    whitespace-nowrap
-                  "
-                >
-                  Add to Plan
-                </button>
-
-                {/* Close / Remove */}
                 <button
                   onClick={() => handleRemove(item.id)}
                   className="

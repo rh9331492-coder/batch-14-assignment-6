@@ -1,12 +1,14 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { DataContext } from "../context/CardContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { toast } from "react-toastify";
 
 const ListeadCard = () => {
   const { addToCard, setAddToCard } = useContext(DataContext);
+  const [done, setDone] = useState<number[]>([]);
   const pathName = usePathname();
 
   console.log(addToCard);
@@ -73,8 +75,8 @@ const ListeadCard = () => {
           <Link href="/listeadCard">
             <button
               className={`px-4 py-1.5 rounded-full transition ${pathName === "/listeadCard"
-                  ? "bg-[#262a35] text-white font-medium shadow"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-[#262a35] text-white font-medium shadow"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Today&apos;s Plan
@@ -84,8 +86,8 @@ const ListeadCard = () => {
           <Link href="/saveForLater">
             <button
               className={`px-4 py-1.5 rounded-full transition ${pathName === "/saveForLater"
-                  ? "bg-[#262a35] text-white font-medium shadow"
-                  : "text-gray-400 hover:text-white"
+                ? "bg-[#262a35] text-white font-medium shadow"
+                : "text-gray-400 hover:text-white"
                 }`}
             >
               Saved
@@ -189,23 +191,27 @@ const ListeadCard = () => {
               {/* Buttons */}
               <div className="flex items-center gap-2">
 
-                <Link href={'/[Ditails]'}>
                 <button
                   className="border border-gray-700 hover:border-gray-500 
                   text-gray-300 text-xs px-4 py-2 rounded-full 
                   transition whitespace-nowrap"
                 >
-                  View Details
+                  View Detailss
                 </button>
-                </Link>
 
                 <button
-                  className="bg-[#ccff00] hover:bg-[#b3e600] 
-                  text-black text-xs font-bold 
-                  px-4 py-2 rounded-full 
-                  transition whitespace-nowrap"
+                  onClick={() => {
+                    if (!done.includes(item.id)) {
+                      setDone([...done, item.id]);
+                      toast.success(`${item.name} marked as done!`);
+                    }
+                  }}
+                  className={`text-black text-xs font-bold px-4 py-2 rounded-full transition whitespace-nowrap ${done.includes(item.id)
+                      ? "bg-green-500"
+                      : "bg-[#ccff00] hover:bg-[#b3e600]"
+                    }`}
                 >
-                  ✓ Mark as Done
+                  {done.includes(item.id) ? "✓ Done" : "✓ Mark as Done"}
                 </button>
 
                 {/* Close Button */}

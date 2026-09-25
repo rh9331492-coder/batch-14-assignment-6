@@ -4,12 +4,34 @@ import logo from '@/app/assets/logo.png'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { DataContext } from '@/app/context/CardContext'
+import { usePathname } from 'next/navigation'
 
 const Navber = () => {
-    const links = <>
-        <Link href={'/'}>Workouts</Link>
-        <Link href={'/listeadCard'}>My Plan</Link>
-    </>
+    const pathname = usePathname();
+
+    const links = (
+        <>
+            <Link
+                href="/"
+                className={`transition ${pathname === "/"
+                    ? "text-[#ccff00]"
+                    : "text-gray-400 hover:text-white"
+                    }`}
+            >
+                Workouts
+            </Link>
+
+            <Link
+                href="/listeadCard"
+                className={`transition ${pathname === "/listeadCard"
+                    ? "text-[#ccff00]"
+                    : "text-gray-400 hover:text-white"
+                    }`}
+            >
+                My Plan
+            </Link>
+        </>
+    )
     const { addToCard } = useContext(DataContext)
     const { saveForLater } = useContext(DataContext)
     return (
