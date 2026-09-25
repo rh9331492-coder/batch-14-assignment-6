@@ -1,4 +1,5 @@
 import { Type } from '@/app/types/type'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const ShowAllCards = ({ cardData }: { cardData: Type }) => {
@@ -7,12 +8,12 @@ const ShowAllCards = ({ cardData }: { cardData: Type }) => {
         <div className="w-full max-w-sm rounded-2xl bg-[#181B20] overflow-hidden shadow-xl border border-[#23272F]">
       {/* Card Image */}
       <div className="relative h-56 w-full bg-gray-800">
-        {/* <Image
-          src={imageSrc}
+        <Image
+          src={cardData.image}
           alt={cardData.name || 'Workout Card'}
           fill
           className="object-cover rounded-t-2xl"
-        /> */}
+        />
 
       </div>
 

@@ -1,5 +1,6 @@
+import AddToCard from '@/app/clientButton/AddToCard'
 import { Type } from '@/app/types/type'
-import Link from 'next/link'
+import Image from 'next/image'
 interface getType {
     params: Promise<{
         Ditails: string
@@ -22,19 +23,20 @@ const DetailsPage = async ({ params }: getType) => {
     // console.log(dataDetails)
     const data = dataDetails.find((data: Type) => data.id === parseInt(Ditails)) as Type
     console.log(data)
+
     return (
         <div className="min-h-screen bg-[#0D0F12] text-white p-6 md:p-12 flex justify-center items-center">
             <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
                 {/* Left Column: Big Image */}
                 <div className="relative w-full h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-gray-800 shadow-2xl">
-                    {/* <Image
+                    <Image
                         src={data.image}
                         alt={data.name || 'Workout Details'}
                         fill
                         className="object-cover"
                         priority
-                    /> */}
+                    />
                 </div>
 
                 {/* Right Column: Details Content */}
@@ -107,17 +109,13 @@ const DetailsPage = async ({ params }: getType) => {
                     </div>
 
                     <div className="flex items-center gap-4 pt-2">
-                        <button className="flex-1 bg-[#CCFF00] hover:bg-[#b3e600] text-black font-extrabold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer text-sm">
-                           
-                            Add to today's plan
-                        </button>
-                        <Link href={'/'}>
+                        <AddToCard data={data}></AddToCard>
+                        
                         <button
                          className="bg-[#181B20] hover:bg-[#23272F] text-white border border-[#23272F] font-semibold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer text-sm">
                          
                             Save for later
                         </button>
-                        </Link>
                     </div>
 
                 </div>

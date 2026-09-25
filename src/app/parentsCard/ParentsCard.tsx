@@ -4,7 +4,11 @@ import { Type } from "../types/type"
 const getData = async () => {
     try {
         const response = await fetch('https://api.abcz.workers.dev/api/fitlog')
-        return response.json()
+       if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    return response.json();
     } catch (error) {
         alert('fetching data is fail')
     } finally {

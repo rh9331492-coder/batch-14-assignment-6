@@ -4,6 +4,7 @@ import "./globals.css";
 import Navber from "./components/navber/Navber";
 import Footer from "./components/footer/Footer";
 import CardsProvider from "./context/CardContext";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </div>
           <Footer></Footer>
+          {/*  */}
+          <ToastContainer />
         </CardsProvider>
       </body>
     </html>
