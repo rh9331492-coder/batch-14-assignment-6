@@ -35,7 +35,7 @@ const Navber = () => {
     const { addToCard } = useContext(DataContext)
     const { saveForLater } = useContext(DataContext)
     return (
-        <header className="sticky top-0 bg-[#0b0b0b] text-white py-4 border-b border-neutral-800">
+        <header className="sticky top-0 z-[999] bg-[#0b0b0b] text-white py-4 border-b border-neutral-800">
             <nav className='max-w-[1100px] mx-auto flex items-center justify-between'>
                 <div className="flex items-center space-x-3">
                     <Image src={logo} alt='logo image'></Image>
