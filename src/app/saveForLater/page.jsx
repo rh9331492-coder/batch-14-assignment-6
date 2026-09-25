@@ -3,10 +3,10 @@
 import { useContext } from "react";
 import { DataContext } from "../context/CardContext";
 
-const ListeadCard = () => {
-  const { addToCard } = useContext(DataContext);
+const SaveForLater = () => {
+  const { saveForLater } = useContext(DataContext);
 
-  console.log(addToCard);
+  console.log(saveForLater);
 
   return (
       <div className="min-h-screen bg-[#111318] text-white p-8 font-sans">
@@ -192,4 +192,4 @@ const ListeadCard = () => {
   )
 };
 
-export default ListeadCard;
+export default SaveForLater;

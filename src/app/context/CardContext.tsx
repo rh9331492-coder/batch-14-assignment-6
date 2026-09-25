@@ -7,10 +7,11 @@ export const DataContext = createContext<any>(null);
 
 const CardsProvider = ({ children }: { children: React.ReactNode }) => {
   const [addToCard, setAddToCard] = useState<Type[]>([]);
+  const [saveForLater, setSaveForLater] = useState<Type[]>([]);
 
   const sharedData = {
-    addToCard,
-    setAddToCard,
+    addToCard, setAddToCard,
+    saveForLater, setSaveForLater
   };
 
   return (

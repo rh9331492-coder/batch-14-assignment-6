@@ -1,4 +1,5 @@
 import AddToCard from '@/app/clientButton/AddToCard'
+import SaveForLater from '@/app/clientButton/SaveForLater'
 import { Type } from '@/app/types/type'
 import Image from 'next/image'
 interface getType {
@@ -110,12 +111,8 @@ const DetailsPage = async ({ params }: getType) => {
 
                     <div className="flex items-center gap-4 pt-2">
                         <AddToCard data={data}></AddToCard>
-                        
-                        <button
-                         className="bg-[#181B20] hover:bg-[#23272F] text-white border border-[#23272F] font-semibold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer text-sm">
-                         
-                            Save for later
-                        </button>
+
+                        <SaveForLater data={data}></SaveForLater>
                     </div>
 
                 </div>
