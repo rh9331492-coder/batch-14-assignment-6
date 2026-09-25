@@ -2,14 +2,17 @@
 
 import { useContext } from "react";
 import { DataContext } from "../context/CardContext";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const ListeadCard = () => {
-  const { addToCard } = useContext(DataContext);
+  const { addToCard, setAddToCard } = useContext(DataContext);
+  const pathName = usePathname();
 
   console.log(addToCard);
 
   return (
-      <div className="min-h-screen bg-[#111318] text-white p-8 font-sans">
+    <div className="min-h-screen bg-[#111318] text-white p-8 font-sans">
 
       <div className="mb-6">
         <h1 className="text-2xl font-black tracking-wider uppercase mb-1">
@@ -66,13 +69,29 @@ const ListeadCard = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
 
         <div className="flex items-center gap-2 bg-[#181b22] p-1 rounded-full border border-gray-800/60 text-xs">
-          <button className="px-4 py-1.5 rounded-full bg-[#262a35] text-white font-medium shadow">
-            Today&apos;s Plan
-          </button>
 
-          <button className="px-4 py-1.5 rounded-full text-gray-400 hover:text-white transition">
-            Saved
-          </button>
+          <Link href="/listeadCard">
+            <button
+              className={`px-4 py-1.5 rounded-full transition ${pathName === "/listeadCard"
+                  ? "bg-[#262a35] text-white font-medium shadow"
+                  : "text-gray-400 hover:text-white"
+                }`}
+            >
+              Today&apos;s Plan
+            </button>
+          </Link>
+
+          <Link href="/saveForLater">
+            <button
+              className={`px-4 py-1.5 rounded-full transition ${pathName === "/saveForLater"
+                  ? "bg-[#262a35] text-white font-medium shadow"
+                  : "text-gray-400 hover:text-white"
+                }`}
+            >
+              Saved
+            </button>
+          </Link>
+
         </div>
 
         <div className="flex items-center gap-2 text-xs text-gray-400">
@@ -119,77 +138,101 @@ const ListeadCard = () => {
 
       ) : (
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="space-y-3">
 
           {addToCard.map((item: any) => (
 
             <div
               key={item.id}
-              className="bg-[#181b22] border border-gray-800 rounded-2xl overflow-hidden"
+              className="bg-[#181b22] border border-gray-800 rounded-2xl p-3 flex flex-col md:flex-row md:items-center gap-4"
             >
 
+              {/* Image */}
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-52 object-cover"
+                className="w-full md:w-[110px] h-[100px] md:h-[62px] object-cover rounded-xl"
               />
 
-              <div className="p-5">
+              {/* Exercise Info */}
+              <div className="flex-1 min-w-0">
 
-                <h2 className="text-xl font-bold uppercase">
+                <h2 className="text-sm md:text-base font-bold uppercase truncate">
                   {item.name}
                 </h2>
 
-                <p className="text-gray-400 text-sm mt-2 line-clamp-2">
-                  {item.description}
+                <p className="text-xs text-gray-500 mt-1">
+                  {item.category || item.description}
                 </p>
 
-                <div className="grid grid-cols-3 gap-2 mt-5">
+                <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
 
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Sets
-                    </p>
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">◷</span>
+                    {item.duration} min
+                  </span>
 
-                    <p className="font-bold">
-                      {item.sets}
-                    </p>
-                  </div>
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">♨</span>
+                    {item.caloriesBurned} kcal
+                  </span>
 
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Reps
-                    </p>
-
-                    <p className="font-bold">
-                      {item.reps}
-                    </p>
-                  </div>
-
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Time
-                    </p>
-
-                    <p className="font-bold">
-                      {item.duration}m
-                    </p>
-                  </div>
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">★</span>
+                    {item.rating || "4.5"}
+                  </span>
 
                 </div>
 
               </div>
 
-            </div>
+              {/* Buttons */}
+              <div className="flex items-center gap-2">
 
+                <Link href={'/[Ditails]'}>
+                <button
+                  className="border border-gray-700 hover:border-gray-500 
+                  text-gray-300 text-xs px-4 py-2 rounded-full 
+                  transition whitespace-nowrap"
+                >
+                  View Details
+                </button>
+                </Link>
+
+                <button
+                  className="bg-[#ccff00] hover:bg-[#b3e600] 
+                  text-black text-xs font-bold 
+                  px-4 py-2 rounded-full 
+                  transition whitespace-nowrap"
+                >
+                  ✓ Mark as Done
+                </button>
+
+                {/* Close Button */}
+                <button
+                  onClick={() => {
+                    setAddToCard(
+                      addToCard.filter(
+                        (card: any) => card.id !== item.id
+                      )
+                    );
+                  }}
+                  className="text-gray-500 hover:text-white 
+                  text-lg px-2 transition"
+                >
+                  ×
+                </button>
+
+              </div>
+
+            </div>
           ))}
 
         </div>
-
       )}
 
     </div>
-  )
+  );
 };
 
 export default ListeadCard;

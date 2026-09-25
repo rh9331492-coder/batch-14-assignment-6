@@ -34,7 +34,7 @@ const SaveForLater = ({data} : { data:Type}) => {
                     : "bg-[#CCFF00] hover:bg-[#b3e600]"
                 } text-black font-extrabold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer text-sm`}
         >
-            {added ? "Added ✓" : "Add to today's plan"}
+            {added ? "Added ✓" : "Sove for Later"}
         </button>
     )
 }

@@ -1,16 +1,26 @@
+
 "use client";
 
 import { useContext } from "react";
+import Link from "next/link";
 import { DataContext } from "../context/CardContext";
 
 const SaveForLater = () => {
-  const { saveForLater } = useContext(DataContext);
+  const { saveForLater, setSaveForLater } = useContext(DataContext);
 
   console.log(saveForLater);
 
-  return (
-      <div className="min-h-screen bg-[#111318] text-white p-8 font-sans">
+  // Remove saved card
+  const handleRemove = (id) => {
+    setSaveForLater(
+      saveForLater.filter((item) => item.id !== id)
+    );
+  };
 
+  return (
+    <div className="min-h-screen bg-[#111318] text-white p-8 font-sans">
+
+      {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-black tracking-wider uppercase mb-1">
           My Plan
@@ -21,40 +31,44 @@ const SaveForLater = () => {
         </p>
       </div>
 
+      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
+        {/* Exercises */}
         <div className="bg-[#181b22] border border-gray-800/60 rounded-xl p-5">
           <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
             Exercises
           </p>
 
           <h2 className="text-4xl font-bold text-[#ccff00]">
-            {addToCard.length}
+            {saveForLater.length}
           </h2>
         </div>
 
+        {/* Minutes */}
         <div className="bg-[#181b22] border border-gray-800/60 rounded-xl p-5">
           <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
             Minutes
           </p>
 
           <h2 className="text-4xl font-bold text-white">
-            {addToCard.reduce(
-              (total: number, item: any) =>
+            {saveForLater.reduce(
+              (total, item) =>
                 total + Number(item.duration || 0),
               0
             )}
           </h2>
         </div>
 
+        {/* Calories */}
         <div className="bg-[#181b22] border border-gray-800/60 rounded-xl p-5">
           <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">
             Calories
           </p>
 
           <h2 className="text-4xl font-bold text-white">
-            {addToCard.reduce(
-              (total: number, item: any) =>
+            {saveForLater.reduce(
+              (total, item) =>
                 total + Number(item.caloriesBurned || 0),
               0
             )}
@@ -63,19 +77,27 @@ const SaveForLater = () => {
 
       </div>
 
+      {/* Tabs + Sort */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
 
+        {/* Tabs */}
         <div className="flex items-center gap-2 bg-[#181b22] p-1 rounded-full border border-gray-800/60 text-xs">
-          <button className="px-4 py-1.5 rounded-full bg-[#262a35] text-white font-medium shadow">
-            Today&apos;s Plan
-          </button>
 
-          <button className="px-4 py-1.5 rounded-full text-gray-400 hover:text-white transition">
+          <Link href="/listeadCard">
+            <button className="px-4 py-1.5 rounded-full text-gray-400 hover:text-white transition">
+              Today&apos;s Plan
+            </button>
+          </Link>
+
+          <button className="px-4 py-1.5 rounded-full bg-[#262a35] text-white font-medium shadow">
             Saved
           </button>
+
         </div>
 
+        {/* Sort */}
         <div className="flex items-center gap-2 text-xs text-gray-400">
+
           <span>Sort By</span>
 
           <button className="flex items-center gap-2 bg-[#181b22] border border-gray-800/60 px-3 py-1.5 rounded-lg text-white">
@@ -95,11 +117,13 @@ const SaveForLater = () => {
               />
             </svg>
           </button>
+
         </div>
 
       </div>
 
-      {addToCard.length === 0 ? (
+      {/* Saved Cards */}
+      {saveForLater.length === 0 ? (
 
         <div className="border border-dashed border-gray-800 rounded-2xl p-16 text-center bg-[#14161c]">
 
@@ -108,7 +132,7 @@ const SaveForLater = () => {
           </h3>
 
           <p className="text-gray-400 text-sm mb-6">
-            Browse the library and add a lift to get today moving.
+            Browse the library and save a lift for later.
           </p>
 
           <button className="bg-[#ccff00] hover:bg-[#b3e600] text-black text-sm font-semibold px-6 py-2.5 rounded-full transition">
@@ -119,64 +143,143 @@ const SaveForLater = () => {
 
       ) : (
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="space-y-3">
 
-          {addToCard.map((item: any) => (
+          {saveForLater.map((item) => (
 
             <div
               key={item.id}
-              className="bg-[#181b22] border border-gray-800 rounded-2xl overflow-hidden"
+              className="
+                bg-[#181b22]
+                border border-gray-800
+                rounded-2xl
+                p-3
+                flex flex-col
+                md:flex-row
+                md:items-center
+                gap-4
+                transition
+                hover:border-gray-700
+              "
             >
 
+              {/* Image */}
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-52 object-cover"
+                className="
+                  w-full
+                  md:w-[110px]
+                  h-[100px]
+                  md:h-[62px]
+                  object-cover
+                  rounded-xl
+                "
               />
 
-              <div className="p-5">
+              {/* Exercise Info */}
+              <div className="flex-1 min-w-0">
 
-                <h2 className="text-xl font-bold uppercase">
+                <h2 className="text-sm md:text-base font-bold uppercase truncate">
                   {item.name}
                 </h2>
 
-                <p className="text-gray-400 text-sm mt-2 line-clamp-2">
-                  {item.description}
+                <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+                  {item.category || item.description}
                 </p>
 
-                <div className="grid grid-cols-3 gap-2 mt-5">
+                {/* Info */}
+                <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
 
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Sets
-                    </p>
+                  {/* Duration */}
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">
+                      ◷
+                    </span>
 
-                    <p className="font-bold">
-                      {item.sets}
-                    </p>
-                  </div>
+                    {item.duration || 0} min
+                  </span>
 
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Reps
-                    </p>
+                  {/* Calories */}
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">
+                      ♨
+                    </span>
 
-                    <p className="font-bold">
-                      {item.reps}
-                    </p>
-                  </div>
+                    {item.caloriesBurned || 0} kcal
+                  </span>
 
-                  <div className="bg-[#111318] rounded-lg p-3 text-center">
-                    <p className="text-xs text-gray-500">
-                      Time
-                    </p>
+                  {/* Rating */}
+                  <span className="flex items-center gap-1">
+                    <span className="text-[#ccff00]">
+                      ★
+                    </span>
 
-                    <p className="font-bold">
-                      {item.duration}m
-                    </p>
-                  </div>
+                    {item.rating || "4.5"}
+                  </span>
 
                 </div>
+
+              </div>
+
+              {/* Buttons */}
+              <div className="flex items-center gap-2">
+
+                {/* View Details */}
+                <button
+                  className="
+                    border border-gray-700
+                    hover:border-gray-500
+                    text-gray-300
+                    text-xs
+                    px-4
+                    py-2
+                    rounded-full
+                    transition
+                    whitespace-nowrap
+                  "
+                >
+                  View Details
+                </button>
+
+                {/* Add To Plan */}
+                <button
+                  className="
+                    bg-[#ccff00]
+                    hover:bg-[#b3e600]
+                    text-black
+                    text-xs
+                    font-bold
+                    px-4
+                    py-2
+                    rounded-full
+                    transition
+                    whitespace-nowrap
+                  "
+                >
+                  Add to Plan
+                </button>
+
+                {/* Close / Remove */}
+                <button
+                  onClick={() => handleRemove(item.id)}
+                  className="
+                    text-gray-500
+                    hover:text-red-500
+                    hover:bg-red-500/10
+                    text-xl
+                    w-8
+                    h-8
+                    rounded-full
+                    transition
+                    flex
+                    items-center
+                    justify-center
+                  "
+                  title="Remove from saved"
+                >
+                  ×
+                </button>
 
               </div>
 
@@ -189,7 +292,7 @@ const SaveForLater = () => {
       )}
 
     </div>
-  )
+  );
 };
 
 export default SaveForLater;
