@@ -14,7 +14,6 @@ const ShowAllCards = ({ cardData }: { cardData: Type }) => {
           fill
           className="object-cover rounded-t-2xl"
         />
-
       </div>
 
       <div className="p-5 flex flex-col gap-4">
